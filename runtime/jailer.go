@@ -75,11 +75,13 @@ func newJailer(
 	service *service,
 	request *proto.CreateVMRequest,
 ) (jailer, error) {
+	fmt.Println("1")
 	if request == nil || request.JailerConfig == nil {
 		l := logger.WithField("jailer", "noop")
 		return newNoopJailer(ctx, l, service.shimDir), nil
 	}
 
+	fmt.Println("2")
 	if request.JailerConfig.UID == 0 || request.JailerConfig.GID == 0 {
 		return nil, fmt.Errorf(
 			"attempting to run as %d:%d. 0 cannot be used for the UID or GID",
@@ -88,10 +90,12 @@ func newJailer(
 		)
 	}
 
+	fmt.Println("3")
 	if err := os.MkdirAll(ociBundlePath, 0700); err != nil {
 		return nil, fmt.Errorf("failed to create oci bundle path: %s: %w", ociBundlePath, err)
 	}
 
+	fmt.Println("4")
 	l := logger.WithField("jailer", "runc")
 	config := runcJailerConfig{
 		OCIBundlePath:     ociBundlePath,

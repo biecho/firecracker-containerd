@@ -536,6 +536,12 @@ func (s *service) createVM(requestCtx context.Context, request *proto.CreateVMRe
 	}
 
 	s.logger.Info("creating new VM")
+	s.logger.Infof("s.shimCtx: %+v", s.shimCtx)
+	s.logger.Infof("s.logger: %+v", s.logger)
+	s.logger.Infof("dir.RootPath(): %s", dir.RootPath())
+	s.logger.Infof("s: %+v", s)
+	s.logger.Infof("request: %+v", request)
+
 	s.jailer, err = newJailer(s.shimCtx, s.logger, dir.RootPath(), s, request)
 	if err != nil {
 		return fmt.Errorf("failed to create jailer: %w", err)
